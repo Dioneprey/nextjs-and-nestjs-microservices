@@ -15,7 +15,8 @@ export default async function AppLayout({
   children,
 }: AppLayoutProps) {
   const session = await getSession(request, response)
-
+  console.log(session?.accessToken);
+  
   if (!session) {
     redirect('/api/auth/login')
   } else {
