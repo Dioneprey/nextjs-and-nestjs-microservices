@@ -11,12 +11,21 @@ dependencies:
   '@auth0/nextjs-auth0':
     specifier: ^3.5.0
     version: 3.5.0(next@14.1.0)
+  cookies-next:
+    specifier: ^4.1.1
+    version: 4.1.1
   graphql:
     specifier: ^16.8.1
     version: 16.8.1
+  http-proxy:
+    specifier: ^1.18.1
+    version: 1.18.1
   next:
     specifier: 14.1.0
     version: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)
+  next-http-proxy-middleware:
+    specifier: ^1.2.6
+    version: 1.2.6
   react:
     specifier: ^18
     version: 18.2.0
@@ -43,6 +52,9 @@ devDependencies:
   '@rocketseat/eslint-config':
     specifier: ^2.1.0
     version: 2.1.0(eslint@8.56.0)(typescript@5.3.3)
+  '@types/http-proxy':
+    specifier: ^1.17.14
+    version: 1.17.14
   '@types/node':
     specifier: ^20
     version: 20.11.10
@@ -1711,6 +1723,22 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /@types/cookie@0.6.0:
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: false
+
+  /@types/http-proxy@1.17.14:
+    resolution: {integrity: sha512-SSrD0c1OQzlFX7pGu1eXxSEjemej64aaNPRhhVYUGqXh0BtldAAx37MG8btcumvpgKyZp1F5Gn3JkktdxiFv6w==}
+    dependencies:
+      '@types/node': 20.11.10
+    dev: true
+
+  /@types/http-proxy@1.17.3:
+    resolution: {integrity: sha512-wIPqXANye5BbORbuh74exbwNzj+UWCwWyeEFJzUQ7Fq3W2NSAy+7x7nX1fgbEypr2/TdKqpeuxLnXWgzN533/Q==}
+    dependencies:
+      '@types/node': 20.11.10
+    dev: false
+
   /@types/js-yaml@4.0.9:
     resolution: {integrity: sha512-k4MGaQl5TGo/iipqb2UDG2UwjXziSWkh0uysQelTlJpX1qGlpUZYm8PnO4DxG1qBomtJUdYJ6qR6xdIah10JLg==}
     dev: true
@@ -1727,11 +1755,14 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
+  /@types/node@16.18.79:
+    resolution: {integrity: sha512-Qd7jdLR5zmnIyMhfDrfPqN5tUCvreVpP3Qrf2oSM+F7SNzlb/MwHISGUkdFHtevfkPJ3iAGyeQI/jsbh9EStgQ==}
+    dev: false
+
   /@types/node@20.11.10:
     resolution: {integrity: sha512-rZEfe/hJSGYmdfX9tvcPMYeYPW2sNl50nsw4jZmRcaG0HIAb0WYEpsB05GOb53vjqpyE9GUhlDQ4jLSoB5q9kg==}
     dependencies:
       undici-types: 5.26.5
-    dev: true
 
   /@types/prop-types@15.7.11:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
@@ -2569,6 +2600,14 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /cookies-next@4.1.1:
+    resolution: {integrity: sha512-20QaN0iQSz87Os0BhNg9M71eM++gylT3N5szTlhq2rK6QvXn1FYGPB4eAgU4qFTunbQKhD35zfQ95ZWgzUy3Cg==}
+    dependencies:
+      '@types/cookie': 0.6.0
+      '@types/node': 16.18.79
+      cookie: 0.6.0
+    dev: false
+
   /cosmiconfig@8.3.6(typescript@5.3.3):
     resolution: {integrity: sha512-kcZ6+W5QzcJ3P1Mt+83OUv/oHFqZHIx8DuxG6eZ5RGMERoLqp4BuGjhHLYGK+Kf5XVkQvqBSmAy/nGWN3qDgEA==}
     engines: {node: '>=14'}
@@ -3216,6 +3255,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /eventemitter3@4.0.7:
+    resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
+    dev: false
+
   /external-editor@3.1.0:
     resolution: {integrity: sha512-hMQ4CX1p1izmuLYyZqLMO/qGNw10wSv9QDCPfzXfyFrOaCSSoRfqE1Kf1s5an66J5JZC62NewG+mK49jOCtQew==}
     engines: {node: '>=4'}
@@ -3352,6 +3395,16 @@ packages:
   /flatted@3.2.9:
     resolution: {integrity: sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==}
     dev: true
+
+  /follow-redirects@1.15.5:
+    resolution: {integrity: sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
 
   /for-each@0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -3651,6 +3704,17 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /http-proxy@1.18.1:
+    resolution: {integrity: sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      eventemitter3: 4.0.7
+      follow-redirects: 1.15.5
+      requires-port: 1.0.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /https-proxy-agent@7.0.2:
     resolution: {integrity: sha512-NmLNjm6ucYwtcUmL7JQC1ZQ57LmHP4lT15FQ8D61nak1rO6DH+fz5qNK2Ap5UN4ZapYICE3/0KodcLYSPsPbaA==}
@@ -4329,6 +4393,16 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
+  /next-http-proxy-middleware@1.2.6:
+    resolution: {integrity: sha512-vHmtFLeO+HomU4Fx/CoA4MbLnXya1B17yR5qOmpYZqRjzGa17a9dgXh9ONvquSZdMrIn7bUfjoPLxMkYMtKj3Q==}
+    engines: {node: '>=10.0.0'}
+    dependencies:
+      '@types/http-proxy': 1.17.3
+      http-proxy: 1.18.1
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-wlzrsbfeSU48YQBjZhDzOwhWhGsy+uQycR8bHAOt1LY1bn3zZEcDyHQOEoN3aWzQ8LHCAJ1nqrWCc9XF2+O45Q==}
     engines: {node: '>=18.17.0'}
@@ -4964,6 +5038,10 @@ packages:
     resolution: {integrity: sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==}
     dev: true
 
+  /requires-port@1.0.0:
+    resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
+    dev: false
+
   /resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
@@ -5574,7 +5652,6 @@ packages:
 
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
-    dev: true
 
   /unixify@1.0.0:
     resolution: {integrity: sha512-6bc58dPYhCMHHuwxldQxO3RRNZ4eCogZ/st++0+fcC1nr0jiGUtAdBJ2qzmLQWSxbtz42pWt4QQMiZ9HvZf5cg==}
