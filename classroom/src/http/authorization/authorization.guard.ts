@@ -1,48 +1,44 @@
 import {
+  Injectable,
   CanActivate,
   ExecutionContext,
-  Injectable,
   UnauthorizedException,
 } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Observable } from 'rxjs'
+import { GoogleTokenVerify } from './google-token-verify.service'
 import { GqlExecutionContext } from '@nestjs/graphql'
-import { expressjwt as jwt, GetVerificationKey } from 'express-jwt'
-import { expressJwtSecret } from 'jwks-rsa'
-import { promisify } from 'node:util'
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
-  private AUTH0_AUDIENCE: string
-  private AUTH0_DOMAIN: string
+  constructor(private readonly googleTokenVerify: GoogleTokenVerify) {}
 
-  constructor(private configService: ConfigService) {
-    this.AUTH0_AUDIENCE = this.configService.get('AUTH0_AUDIENCE') ?? ''
-    this.AUTH0_DOMAIN = this.configService.get('AUTH0_DOMAIN') ?? ''
-  }
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const { req } = GqlExecutionContext.create(context).getContext()
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const { req, res } = GqlExecutionContext.create(context).getContext()
+    const authHeader = req?.headers?.authorization
 
-    const checkJWT = promisify(
-      jwt({
-        secret: expressJwtSecret({
-          cache: true,
-          rateLimit: true,
-          jwksRequestsPerMinute: 5,
-          jwksUri: `${this.AUTH0_DOMAIN}.well-known/jwks.json`,
-        }) as GetVerificationKey,
-        audience: this.AUTH0_AUDIENCE,
-        issuer: this.AUTH0_DOMAIN,
-        algorithms: ['RS256'],
-      }),
-    )
-
-    try {
-      await checkJWT(req, res)
-
-      return true
-    } catch (error) {
-      throw new UnauthorizedException(error)
+    if (!authHeader) {
+      throw new UnauthorizedException('Authorization header is missing.')
     }
+
+    const [bearer, accessToken] = authHeader.split(' ')
+
+    if (bearer !== 'Bearer' || !accessToken) {
+      throw new UnauthorizedException('Invalid authorization header format.')
+    }
+
+    return this.googleTokenVerify
+      .validate(accessToken)
+      .then((tokenInfo) => {
+        req.user = tokenInfo
+        return true
+      })
+      .catch((error) => {
+        console.log(error)
+
+        throw new UnauthorizedException(error.message)
+      })
   }
 }

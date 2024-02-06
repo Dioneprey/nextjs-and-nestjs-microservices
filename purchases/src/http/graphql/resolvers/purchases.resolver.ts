@@ -9,12 +9,12 @@ import {
 import { Purchase } from '../models/purchase'
 import { PurchasesService } from 'src/services/purchases.service'
 import { UseGuards } from '@nestjs/common'
-import { AuthorizationGuard } from 'src/http/authorization/authorization.guard'
 import { Product } from '../models/product'
 import { ProductsService } from 'src/services/products.service'
 import { CreatePurchaseInput } from '../inputs/create-purchase-input'
 import { AuthUser, CurrentUser } from 'src/http/authorization/current-user'
 import { CustomersService } from 'src/services/customers.service'
+import { AuthorizationGuard } from 'src/http/authorization/authorization.guard'
 
 @Resolver(() => Purchase)
 export class PurchasesResolver {

@@ -10,6 +10,9 @@ export const CurrentUser = createParamDecorator(
     const ctx = GqlExecutionContext.create(context)
     const req = ctx.getContext().req
 
-    return req.auth
+    req.user.sub = req.user.googleId
+    delete req.user.googleId
+
+    return req.user
   },
 )

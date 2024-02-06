@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { Providers } from './components/Providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,9 +17,9 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <UserProvider>
-        <body className={inter.className}>{children}</body>
-      </UserProvider>
+      <body className={inter.className}>
+        <Providers>{children} </Providers>
+      </body>
     </html>
   )
 }
