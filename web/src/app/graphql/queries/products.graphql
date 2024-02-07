@@ -1,7 +1,0 @@
- query GetProcucts {
-    products {
-      id 
-      title
-      slug
-    }
-  }
