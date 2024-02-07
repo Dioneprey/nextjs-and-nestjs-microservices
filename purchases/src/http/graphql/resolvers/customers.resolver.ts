@@ -7,10 +7,10 @@ import {
 } from '@nestjs/graphql'
 import { Customer } from '../models/customer'
 import { UseGuards } from '@nestjs/common'
-import { AuthorizationGuard } from 'src/http/authorization/authorization.guard'
 import { AuthUser, CurrentUser } from 'src/http/authorization/current-user'
 import { CustomersService } from 'src/services/customers.service'
 import { PurchasesService } from 'src/services/purchases.service'
+import { AuthorizationGuard } from 'src/http/authorization/authorization.guard'
 
 @Resolver(() => Customer)
 export class CustomersResolver {
@@ -22,7 +22,9 @@ export class CustomersResolver {
   @UseGuards(AuthorizationGuard)
   @Query(() => Customer)
   me(@CurrentUser() user: AuthUser) {
-    return this.customersService.getCustomerByAuthUserId(user.sub)
+    const s = this.customersService.getCustomerByAuthUserId(user.sub)
+
+    return s
   }
 
   @ResolveField()

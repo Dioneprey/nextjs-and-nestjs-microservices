@@ -7,7 +7,7 @@ export default async function App(
   response: NextResponse,
 ) {
   const session = await getSession(request, response)
-  
+
   if (!session) {
     redirect('/api/auth/login')
   } else {

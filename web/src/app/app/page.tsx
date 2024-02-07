@@ -1,26 +1,50 @@
 'use client'
 
-import { useUser } from '@auth0/nextjs-auth0/client'
 import { withApollo } from '../lib/withApollo'
-import { ssrGetProcucts } from '../graphql/generated/pagePublic'
-import { useMeQuery } from '../graphql/generated/graphql'
 
-export function Home({ data }) {
-  const { user } = useUser()
+import { Product } from '../graphql/generated/graphql'
+import { gql, useQuery } from '@apollo/client'
 
-  const { data: me, error } = useMeQuery()
-  console.log(me)
-  console.log(error)
+const GET_PRODUCT_QUERY = gql`
+  query {
+    products {
+      id
+      title
+      slug
+    }
+  }
+`
+
+const ME_QUERY = gql`
+  query {
+    enrollments {
+      id
+      student {
+        authUserId
+      }
+
+      course {
+        title
+        slug
+      }
+    }
+  }
+`
+
+interface getProductQuery {
+  products: Product[]
+}
+
+export function Home() {
+  const { data: getProductData } = useQuery<getProductQuery>(GET_PRODUCT_QUERY)
+  const { data: getMeData } = useQuery<getProductQuery>(ME_QUERY)
 
   return (
     <div>
-      <h1>Hello World</h1>
-      <pre>{JSON.stringify(me, null, 2)}</pre>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-
-      <a href="/api/auth/logout">Logout</a>
+      <pre>{JSON.stringify(getMeData, null, 2)}</pre>
+      <pre>{JSON.stringify(getProductData, null, 2)}</pre>
     </div>
   )
 }
 
-export default withApollo(ssrGetProcucts.withPage()(Home))
+export default withApollo(Home)
